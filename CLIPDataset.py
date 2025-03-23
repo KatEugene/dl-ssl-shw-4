@@ -40,7 +40,6 @@ class CLIPDataset(Dataset):
         }
         path = self.image_path + self.image_filenames[idx]
         item['image'] = self.transforms(Image.open(path))
-        print(item['image'].shape)
         item['caption'] = self.captions[idx]
         return item
 

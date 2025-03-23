@@ -1,4 +1,5 @@
 from transformers import DistilBertModel, DistilBertTokenizer
+from torch import nn
 
 
 class TextEncoder(nn.Module):

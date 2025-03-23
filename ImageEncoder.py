@@ -15,7 +15,7 @@ class ImageEncoder(nn.Module):
         Look the documentation of TIMM on how to donwload the model: https://timm.fast.ai/
         """
         super().__init__()
-        self.model = timm.create_model(model_name, pretrained=pretrained, num_classes=0)
+        self.model = timm.create_model(model_name, pretrained=pretrained)
         if not trainable:
             for param in self.model.parameters():
                 param.requires_grad = False

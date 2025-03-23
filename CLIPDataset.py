@@ -6,6 +6,7 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 import typing as tp
 
+
 class CLIPDataset(Dataset):
     def __init__(self, image_path, image_filenames, captions, tokenizer):
         """
@@ -22,7 +23,8 @@ class CLIPDataset(Dataset):
         self.image_filenames = image_filenames
         self.captions = list(captions)
         self.tokenizer = tokenizer
-        self.encoded_captions = self.tokenizer(self.captions, padding=self.padding, truncation=self.truncation, max_length=self.max_tokenizer_length)
+        self.encoded_captions = self.tokenizer(self.captions, padding=self.padding,
+                                               truncation=self.truncation, max_length=self.max_tokenizer_length)
         self.transforms = T.Compose([
             T.Resize((224, 224)),
             T.ToTensor(),
@@ -30,7 +32,6 @@ class CLIPDataset(Dataset):
         ])
 
     def __getitem__(self, idx: int) -> tp.Dict[str, tp.Union[torch.Tensor, str]]:
-
         """
         This one should return dict(keys=['image', 'caption'], value=[Image, Caption])
         """
@@ -39,9 +40,9 @@ class CLIPDataset(Dataset):
         }
         path = self.image_path + self.image_filenames[idx]
         item['image'] = self.transforms(Image.open(path))
+        print(item['image'].shape)
         item['caption'] = self.captions[idx]
         return item
-
 
     def __len__(self):
         return len(self.captions)

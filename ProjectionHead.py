@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+
 class ProjectionHead(nn.Module):
     def __init__(
         self,
@@ -16,11 +17,19 @@ class ProjectionHead(nn.Module):
         The whole structure should be in the following order:
         [Linear, GELU, Linear, Dropout, Skip, LayerNorm]
         """
-        self.projection = #TODO: Projection into a small latent space
-        # Make everything else yourself.
-    
+        self.proj = nn.Sequential(
+            nn.Linear(embedding_dim, projection_dim),
+            nn.GELU(),
+            nn.Linear(projection_dim, projection_dim),
+            nn.Dropout(dropout),
+        )
+        self.layer_norm = nn.LayerNorm(projection_dim)
+
     def forward(self, x):
         """
         Perform forward pass, do not forget about skip-connections.
         """
-        pass
+        proj = self.proj(x)
+        out = x + proj
+        out = self.layer_norm(out)
+        return out

@@ -17,7 +17,7 @@ class ProjectionHead(nn.Module):
         The whole structure should be in the following order:
         [Linear, GELU, Linear, Dropout, Skip, LayerNorm]
         """
-        self.proj1 = nn.Linear(embedding_dim, projection_dim),
+        self.proj1 = nn.Linear(embedding_dim, projection_dim)
         self.proj2 = nn.Sequential(
             nn.GELU(),
             nn.Linear(projection_dim, projection_dim),

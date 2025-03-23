@@ -17,8 +17,8 @@ class ProjectionHead(nn.Module):
         The whole structure should be in the following order:
         [Linear, GELU, Linear, Dropout, Skip, LayerNorm]
         """
-        self.proj = nn.Sequential(
-            nn.Linear(embedding_dim, projection_dim),
+        self.proj1 = nn.Linear(embedding_dim, projection_dim),
+        self.proj2 = nn.Sequential(
             nn.GELU(),
             nn.Linear(projection_dim, projection_dim),
             nn.Dropout(dropout),
@@ -29,7 +29,8 @@ class ProjectionHead(nn.Module):
         """
         Perform forward pass, do not forget about skip-connections.
         """
-        proj = self.proj(x)
-        out = x + proj
+        proj = self.pro1j(x)
+        proj2 = self.proj2(proj)
+        out = proj2 + proj
         out = self.layer_norm(out)
         return out

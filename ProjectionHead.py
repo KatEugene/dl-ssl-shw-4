@@ -30,6 +30,7 @@ class ProjectionHead(nn.Module):
         Perform forward pass, do not forget about skip-connections.
         """
         proj = self.pro1j(x)
+        print(proj.shape)
         proj2 = self.proj2(proj)
         out = proj2 + proj
         out = self.layer_norm(out)
